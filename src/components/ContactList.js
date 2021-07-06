@@ -1,29 +1,20 @@
 import React from "react";
-import ContactCard from "./ContactCard";
 import { Link } from "react-router-dom";
-
-const ContactList = ({ contacts, getContactId }) => {
-  const deleteContact = (id) => {
-    getContactId(id);
-  };
-
-  const renderContactList = contacts.map((contact, index) => {
-    return (
-      <ContactCard
-        contact={contact}
-        key={contact.id}
-        index={index}
-        ClickHandleDelete={deleteContact}
-      />
-    );
-  });
-
+import ContactCard from "./ContactCard";
+const ContactList = ({ contacts, handleDelete }) => {
+  const render = contacts.map((contact) => (
+    <ContactCard
+      contact={contact}
+      key={contact.id}
+      handleDelete={handleDelete}
+    />
+  ));
   return (
-    <div className="py-24 contact-main">
-      {renderContactList}
-
-      <Link to="/add" className="nav-link">
-        <button className="btn btn-success inl-block mt-24">Thêm</button>
+    <div className="list-contact">
+      <h1 className="heading-sub">List user</h1>
+      {render}
+      <Link to='/add'>
+        <button className="btn">Add user</button>
       </Link>
     </div>
   );

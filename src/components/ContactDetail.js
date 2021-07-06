@@ -1,20 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import image from "../images/image.jpg";
+const ContactDetail = (props) => {
+  const { name, email } = props.location.state.contact;
 
-const ContactCard = (props) => {
-  const { name, email, age } = props.location.state.contact;
   return (
-    <div className="user">
+    <div className="contact-detail">
+      <img src={image} alt="" />
       <div className="info-user">
-        <h2>{name}</h2>
-        <p>{email}</p>
-        <p>{age}</p>
+        <div className="name-user">User: {name}</div>
+        <div className="email-user">Email: {email}</div>
       </div>
-      <Link to="/">
-        <button className="btn inl-block btn-success">Back list contact</button>
+      <Link to='/'>
+        <button className="btn">Back list user</button>
       </Link>
     </div>
   );
 };
 
-export default ContactCard;
+export default ContactDetail;
