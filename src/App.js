@@ -2,41 +2,62 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import AddContact from "./components/AddContact";
 import ContactList from "./components/ContactList";
+import api from "./api/contacts";
 import { v4 } from "uuid";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ContactDetail from "./components/ContactDetail";
+import EditContact from "./components/EditContact";
 
 function App() {
-  const KEY_LOCAL_STORAGE = "contacts";
+  //state contact
   const [contacts, setContacts] = useState([]);
 
-  const handleAddContact = (contact) => {
-    setContacts([
-      ...contacts,
-      {
-        id: v4(),
-        ...contact,
-      },
-    ]);
+  //useEffect data
+
+  const tryGetContact = async () => {
+    const response = await api.get("/contacts");
+    return response.data;
   };
+
   useEffect(() => {
-    const refresh = JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE));
-    if (refresh) {
-      setContacts(refresh);
-    }
+    const getAllContact = async () => {
+      const allContacts = await tryGetContact();
+      if (allContacts) setContacts(allContacts);
+    };
+    getAllContact();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify(contacts));
-  }, [contacts]);
+  // Add new contact
+  const handleAddContact = async (contact) => {
+    const request = {
+      id: v4(),
+      ...contact,
+    };
+    const response = await api.post("/contacts", request);
+    setContacts([...contacts, response.data]);
+  };
 
-  const handleDelete = (id) => {
+  // Delete contact
+  const handleDelete = async (id) => {
+    await api.delete(`/contacts/${id}`);
     const newList = contacts.filter((contact) => contact.id !== id);
     setContacts(newList);
   };
 
+  // Update contact
+  const handleEditContact = async (contact) => {
+    const response = await api.put(`contacts/${contact.id}`, contact);
+    const { id } = response.data;
+    setContacts(
+      contacts.map((contact) => {
+        return contact.id === id ? { ...response.data } : contact;
+      })
+    );
+  };
+
   return (
     <div className="app">
+      <h1 className="heading-main">Contact Manage</h1>
       <Router>
         <Switch>
           <Route
@@ -54,6 +75,13 @@ function App() {
             path="/add"
             render={(props) => (
               <AddContact {...props} handleAddContact={handleAddContact} />
+            )}
+          />
+
+          <Route
+            path="/edit"
+            render={(props) => (
+              <EditContact {...props} handleEditContact={handleEditContact} />
             )}
           />
 

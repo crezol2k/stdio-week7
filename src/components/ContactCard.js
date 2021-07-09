@@ -7,7 +7,7 @@ const ContactCard = ({ contact, handleDelete }) => {
     <div className="user">
       <Link
         to={{ pathname: `/contact/${contact.id}`, state: { contact: contact } }}
-        className="nav-link"
+        className="nav-link link-user"
       >
         <div className="info-user">
           <div className="name-user">{contact.name}</div>
@@ -21,6 +21,15 @@ const ContactCard = ({ contact, handleDelete }) => {
           className="icon-delete"
         />
       </div>
+
+      <Link
+        to={{ pathname: "edit", state: { contact: contact } }}
+        className="nav-link"
+      >
+        <div>
+          <Icon.PencilSquare className="icon-edit" />
+        </div>
+      </Link>
     </div>
   );
 };

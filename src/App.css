@@ -25,11 +25,22 @@ body {
   margin: 0 auto;
 }
 
-.heading-main,
-.heading-sub {
-  margin: 10px 0 40px;
+.heading-main {
+  margin: 20px 0 50px;
   text-transform: uppercase;
+  letter-spacing: 1px;
   text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.2);
+  width: 100%;
+}
+
+.heading-sub {
+  text-transform: uppercase;
+  font-size: 26px;
+  letter-spacing: 1px;
+  color: crimson;
+  font-style: italic;
 }
 
 .form-control {
@@ -103,9 +114,22 @@ body {
 .icon-delete {
   cursor: pointer;
   transition: all 0.5s;
+  color: #d00000;
+  font-size: 20px;
 }
 .icon-delete:hover {
-  color: crimson;
+  color: #e76f51;
+}
+
+.icon-edit {
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.5s;
+  color: #219ebc;
+}
+
+.icon-edit:hover {
+  color: #8ecae6;
 }
 
 img {
@@ -131,4 +155,12 @@ img {
   margin-top: 30px;
   padding: 20px;
   box-shadow: 0px 2px 4px 1px #354f52;
+}
+
+.link-user {
+  flex: 3;
+}
+
+.action {
+  margin-right: 24px;
 }

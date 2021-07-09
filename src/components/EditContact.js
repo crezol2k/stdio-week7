@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 
-export class AddContact extends Component {
-  state = {
-    name: "",
-    email: "",
-  };
+export class EditContact extends Component {
+  constructor(props) {
+    super(props);
+    const { id, name, email } = props.location.state.contact;
 
-  add = (e) => {
+    this.state = {
+      id: id,
+      name: name,
+      email: email,
+    };
+  }
+
+  update = (e) => {
     e.preventDefault();
     if (this.state.name === "" && this.state.email === "") {
       alert("Vui lòng nhập đầy đủ thông tin");
       return;
     }
-    this.props.handleAddContact(this.state);
+    this.props.handleEditContact(this.state);
     this.setState({ name: "", email: "" });
     this.props.history.push("/");
   };
@@ -20,9 +26,9 @@ export class AddContact extends Component {
   render() {
     return (
       <>
-        <h2 className="heading-sub">Add contacts</h2>
+        <h2 className="heading-sub">Edit contacts</h2>
 
-        <form onSubmit={this.add} className="form-control">
+        <form onSubmit={this.update} className="form-control">
           <label>
             Name
             <input
@@ -42,7 +48,7 @@ export class AddContact extends Component {
             />
           </label>
           <button type="submit" className="btn">
-            Add user
+            Update user
           </button>
         </form>
       </>
@@ -50,4 +56,4 @@ export class AddContact extends Component {
   }
 }
 
-export default AddContact;
+export default EditContact;
